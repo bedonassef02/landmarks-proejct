@@ -30,12 +30,15 @@ export class TagsService {
   }
 
   async findOne(id: string): Promise<TagDocument> {
-    const isNameExist: TagDocument | undefined =
-      await this.tagModel.findById(id);
-    if (!isNameExist) {
+    const tag: TagDocument | undefined = await this.tagModel.findById(id);
+    if (!tag) {
       throw new NotFoundException('tag id not found');
     }
     return this.tagModel.findById(id);
+  }
+
+  findByName(name: string): Promise<TagDocument> {
+    return this.tagModel.findOne({ name });
   }
 
   async update(id: string, updateTagDto: UpdateTagDto): Promise<TagDocument> {

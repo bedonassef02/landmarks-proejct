@@ -30,12 +30,15 @@ export class CitiesService {
   }
 
   async findOne(id: string): Promise<CityDocument> {
-    const isNameExist: CityDocument | undefined =
-      await this.cityModel.findById(id);
-    if (!isNameExist) {
+    const city: CityDocument | undefined = await this.cityModel.findById(id);
+    if (!city) {
       throw new NotFoundException('city id not found');
     }
-    return this.cityModel.findById(id);
+    return city;
+  }
+
+  findByName(name: string): Promise<CityDocument> {
+    return this.cityModel.findOne({ name });
   }
 
   async update(
@@ -43,7 +46,9 @@ export class CitiesService {
     updateCityDto: UpdateCityDto,
   ): Promise<CityDocument> {
     // Find the city by its ID
-    const city = await this.cityModel.findById(id).exec();
+    const city: CityDocument | undefined = await this.cityModel
+      .findById(id)
+      .exec();
 
     // If the city does not exist, throw NotFoundException
     if (!city) {
@@ -51,7 +56,7 @@ export class CitiesService {
     }
 
     // Check if a city with the updated name already exists
-    const existingCity = await this.cityModel
+    const existingCity: CityDocument = await this.cityModel
       .findOne({
         name: updateCityDto.name,
         _id: { $ne: id },
