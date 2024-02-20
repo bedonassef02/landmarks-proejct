@@ -16,13 +16,7 @@ export class TagsService {
   ) {}
 
   async create(createTagDto: CreateTagDto): Promise<TagDocument> {
-    const isNameExist: TagDocument | undefined = await this.tagModel.findOne({
-      name: createTagDto.name,
-    });
-    if (!isNameExist) {
-      return this.tagModel.create(createTagDto);
-    }
-    throw new ConflictException('tag name is already in use');
+    return this.tagModel.create(createTagDto);
   }
 
   findAll(): Promise<TagDocument[]> {

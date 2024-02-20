@@ -1,15 +1,15 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
-import { IsUniqueTagConstraint } from '../constraints/is-unique-tag.constaint';
+import { IsUniqueConstraint } from '../constraints/is-unique.constaint';
 
-export function IsUniqueTag(validationOptions?: ValidationOptions) {
+export function IsUnique(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
     registerDecorator({
-      name: 'is-unique-city',
+      name: 'is-unique',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
       constraints: [],
-      validator: IsUniqueTagConstraint,
+      validator: IsUniqueConstraint,
     });
   };
 }

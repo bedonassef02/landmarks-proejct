@@ -16,13 +16,7 @@ export class CitiesService {
   ) {}
 
   async create(createCityDto: CreateCityDto): Promise<CityDocument> {
-    const isNameExist: CityDocument | undefined = await this.cityModel.findOne({
-      name: createCityDto.name,
-    });
-    if (!isNameExist) {
-      return this.cityModel.create(createCityDto);
-    }
-    throw new ConflictException('city name is already in use');
+    return this.cityModel.create(createCityDto);
   }
 
   findAll(): Promise<CityDocument[]> {

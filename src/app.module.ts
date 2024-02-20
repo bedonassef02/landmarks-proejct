@@ -4,6 +4,7 @@ import { CitiesModule } from './cities/cities.module';
 import { TagsModule } from './tags/tags.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
+import { IsUniqueConstraint } from './utils/constraints/is-unique.constaint';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,6 +17,6 @@ import { ConfigModule } from '@nestjs/config';
     DatabaseModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [IsUniqueConstraint],
 })
 export class AppModule {}
