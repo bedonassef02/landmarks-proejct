@@ -8,7 +8,6 @@ import { UpdateTagDto } from './dto/update-tag.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Tag, TagDocument } from './entities/tag.entity';
 import { Model } from 'mongoose';
-import { CityDocument } from '../cities/entities/city.entity';
 
 @Injectable()
 export class TagsService {

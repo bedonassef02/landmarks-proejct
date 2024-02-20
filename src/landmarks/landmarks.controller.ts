@@ -8,9 +8,8 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
-  ParseFilePipeBuilder,
-  HttpStatus,
   ParseFilePipe,
+  Query,
 } from '@nestjs/common';
 import { LandmarksService } from './landmarks.service';
 import { CreateLandmarkDto } from './dto/create-landmark.dto';
@@ -18,6 +17,8 @@ import { UpdateLandmarkDto } from './dto/update-landmark.dto';
 import { LandmarkDocument } from './entities/landmark.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { imageTypeValidation } from '../utils/validators/image-type.validation';
+import { LandmarksQueryFeature } from './utils/features/landmarks-query.feature';
+import { PaginationResponseFeature } from '../utils/features/pagination-response.feature';
 
 @Controller('landmarks')
 export class LandmarksController {
@@ -35,8 +36,10 @@ export class LandmarksController {
   }
 
   @Get()
-  findAll(): Promise<LandmarkDocument[]> {
-    return this.landmarksService.findAll();
+  findAll(
+    @Query() query: LandmarksQueryFeature,
+  ): Promise<PaginationResponseFeature> {
+    return this.landmarksService.findAll(query);
   }
 
   @Get(':id')

@@ -10,7 +10,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { CreateLocationDto } from './create-location.dto';
-import { Transform, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 import { IsUnique } from '../../utils/decorators/is-unique';
 import { IsExist } from '../../utils/decorators/is-exist';
 

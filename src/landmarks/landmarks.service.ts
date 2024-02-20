@@ -9,6 +9,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Landmark, LandmarkDocument } from './entities/landmark.entity';
 import { Model } from 'mongoose';
 import { LocationService } from './services/location.service';
+import { LandmarksQueryFeature } from './utils/features/landmarks-query.feature';
+import { paginationDetails } from '../utils/helpers/pagination-details.helper';
+import { PaginationResponseFeature } from '../utils/features/pagination-response.feature';
 
 @Injectable()
 export class LandmarksService {
@@ -27,8 +30,18 @@ export class LandmarksService {
     return this.landmarkModel.create(createLandmarkDto);
   }
 
-  findAll(): Promise<LandmarkDocument[]> {
-    return this.landmarkModel.find({});
+  async findAll(
+    query: LandmarksQueryFeature,
+  ): Promise<PaginationResponseFeature> {
+    const filter = this.filter(query);
+    const landmarks: LandmarkDocument[] = await this.landmarkModel
+      .find(filter)
+      .select(query.fields)
+      .limit(query.limit)
+      .skip(query.skip)
+      .sort(query.sort);
+    const totalItems: number = await this.totalItems(filter);
+    return paginationDetails(query, landmarks, totalItems);
   }
 
   async findOne(id: string): Promise<LandmarkDocument> {
@@ -72,5 +85,19 @@ export class LandmarksService {
 
   async remove(id: string): Promise<void> {
     await this.landmarkModel.findByIdAndDelete(id);
+  }
+
+  private filter(query: LandmarksQueryFeature): any {
+    const filter: any = {
+      $or: query.searchQuery,
+    };
+    if (query.city) {
+      filter.city = query.city;
+    }
+    return filter;
+  }
+
+  private async totalItems(searchQuery: any): Promise<number> {
+    return this.landmarkModel.countDocuments(searchQuery);
   }
 }

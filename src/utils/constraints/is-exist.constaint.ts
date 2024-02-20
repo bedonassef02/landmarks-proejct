@@ -6,8 +6,6 @@ import {
 import { Injectable } from '@nestjs/common';
 import { CitiesService } from '../../cities/cities.service';
 import { TagsService } from '../../tags/tags.service';
-import { LandmarksService } from '../../landmarks/landmarks.service';
-import { LandmarkDocument } from '../../landmarks/entities/landmark.entity';
 import { TagDocument } from '../../tags/entities/tag.entity';
 import { CityDocument } from '../../cities/entities/city.entity';
 
