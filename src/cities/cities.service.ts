@@ -34,6 +34,9 @@ export class CitiesService {
   findByName(name: string): Promise<CityDocument> {
     return this.cityModel.findOne({ name });
   }
+  findById(id: string): Promise<CityDocument> {
+    return this.cityModel.findById(id);
+  }
 
   async update(
     id: string,

@@ -5,11 +5,18 @@ import { TagsModule } from './tags/tags.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { IsUniqueConstraint } from './utils/constraints/is-unique.constaint';
+import { IsExistConstraint } from './utils/constraints/is-exist.constaint';
+import { join } from 'path';
+import { ServeStaticModule } from '@nestjs/serve-static';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       expandVariables: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
     }),
     LandmarksModule,
     CitiesModule,
@@ -17,6 +24,6 @@ import { IsUniqueConstraint } from './utils/constraints/is-unique.constaint';
     DatabaseModule,
   ],
   controllers: [],
-  providers: [IsUniqueConstraint],
+  providers: [IsUniqueConstraint, IsExistConstraint],
 })
 export class AppModule {}
