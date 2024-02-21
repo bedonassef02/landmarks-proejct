@@ -12,12 +12,16 @@ import { LocationService } from './services/location.service';
 import { LandmarksQueryFeature } from './utils/features/landmarks-query.feature';
 import { paginationDetails } from '../utils/helpers/pagination-details.helper';
 import { PaginationResponseFeature } from '../utils/features/pagination-response.feature';
+import { Image, ImageDocument } from './entities/image.entity';
+import * as mongoose from 'mongoose';
 
 @Injectable()
 export class LandmarksService {
   constructor(
     @InjectModel(Landmark.name)
     private readonly landmarkModel: Model<LandmarkDocument>,
+    @InjectModel(Image.name)
+    private readonly imageModel: Model<ImageDocument>,
     private readonly locationService: LocationService,
   ) {}
 
@@ -45,8 +49,11 @@ export class LandmarksService {
   }
 
   async findOne(id: string): Promise<LandmarkDocument> {
-    const landmark: LandmarkDocument | undefined =
-      await this.landmarkModel.findById(id);
+    const landmark: LandmarkDocument | undefined = await this.landmarkModel
+      .findById(id)
+      .populate('images')
+      .populate('city')
+      .populate('tags');
     if (!landmark) {
       throw new NotFoundException('landmark not found');
     }
@@ -81,6 +88,22 @@ export class LandmarksService {
     return this.landmarkModel.findByIdAndUpdate(id, updateLandmarkDto, {
       new: true,
     });
+  }
+
+  async updateImages(id: string, images: string[]): Promise<void> {
+    // Create new image documents and collect their IDs
+    const createdImageIds: mongoose.Types.ObjectId[] = [];
+    for (const image of images) {
+      const createdImage = await this.imageModel.create({ path: image });
+      createdImageIds.push(createdImage._id);
+    }
+
+    // Update the landmark with the new image IDs
+    await this.landmarkModel.findByIdAndUpdate(
+      id,
+      { images: createdImageIds },
+      { new: true },
+    );
   }
 
   async remove(id: string): Promise<void> {
