@@ -21,7 +21,7 @@ export class QueryFeature {
   @Transform(({ value }) =>
     typeof value === 'string' ? value.replace(/,/g, ' ') : value,
   )
-  fields = '-__v';
+  fields = 'name price likes_count cover_image';
 
   @IsOptional()
   @IsString()

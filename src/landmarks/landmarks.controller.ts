@@ -23,16 +23,17 @@ import { LandmarksQueryFeature } from './utils/features/landmarks-query.feature'
 import { PaginationResponseFeature } from '../utils/features/pagination-response.feature';
 import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
 
-@Controller('landmarks')
+@Controller({ path: 'landmarks', version: '1' })
 export class LandmarksController {
-  constructor(private readonly landmarksService: LandmarksService) {}
+  constructor(private readonly landmarksService: LandmarksService) {
+  }
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   async create(
     @Body() createLandmarkDto: CreateLandmarkDto,
     @UploadedFile(new ParseFilePipe(imageTypeValidation()))
-    image: Express.Multer.File,
+      image: Express.Multer.File,
   ): Promise<LandmarkDocument> {
     createLandmarkDto.cover_image = image.filename;
     return this.landmarksService.create(createLandmarkDto);
@@ -42,7 +43,7 @@ export class LandmarksController {
   @UseInterceptors(FilesInterceptor('images'))
   async createImages(
     @UploadedFiles(new ParseFilePipe(imageTypeValidation()))
-    images: Array<Express.Multer.File>,
+      images: Array<Express.Multer.File>,
     @Param('id', ParseMongoIdPipe) id: string,
   ): Promise<void> {
     await this.landmarksService.updateImages(
@@ -63,6 +64,7 @@ export class LandmarksController {
   findOne(@Param('id') id: string): Promise<LandmarkDocument> {
     return this.landmarksService.findOne(id);
   }
+
   @Patch(':id')
   update(
     @Param('id', ParseMongoIdPipe) id: string,
@@ -75,12 +77,13 @@ export class LandmarksController {
   @UseInterceptors(FileInterceptor('image'))
   updateCoverImage(
     @UploadedFile(new ParseFilePipe(imageTypeValidation()))
-    image: Express.Multer.File,
+      image: Express.Multer.File,
     @Param('id', ParseMongoIdPipe) id: string,
   ) {
     const cover_image: string = image.filename;
     return this.update(id, { cover_image });
   }
+
   @Delete(':id')
   @UsePipes(ParseMongoIdPipe)
   async remove(@Param('id') id: string): Promise<void> {

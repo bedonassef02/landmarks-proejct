@@ -53,7 +53,8 @@ export class LandmarksService {
       .findById(id)
       .populate('images')
       .populate('city')
-      .populate('tags');
+      .populate('tags')
+      .populate('location');
     if (!landmark) {
       throw new NotFoundException('landmark not found');
     }

@@ -14,7 +14,7 @@ import { UpdateTagDto } from './dto/update-tag.dto';
 import { TagDocument } from './entities/tag.entity';
 import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
 
-@Controller('tags')
+@Controller({ path: 'tags', version: '1' })
 export class TagsController {
   constructor(private readonly tagsService: TagsService) {}
 

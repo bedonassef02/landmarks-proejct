@@ -14,7 +14,7 @@ import { UpdateCityDto } from './dto/update-city.dto';
 import { CityDocument } from './entities/city.entity';
 import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
 
-@Controller('cities')
+@Controller({ path: 'cities', version: '1' })
 export class CitiesController {
   constructor(private readonly citiesService: CitiesService) {}
 
