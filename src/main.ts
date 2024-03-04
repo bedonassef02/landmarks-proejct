@@ -11,6 +11,7 @@ async function bootstrap() {
   );
 
   app.setGlobalPrefix('/api');
+  app.enableVersioning();
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   await app.listen(3000);

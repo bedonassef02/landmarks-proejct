@@ -25,15 +25,14 @@ import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
 
 @Controller({ path: 'landmarks', version: '1' })
 export class LandmarksController {
-  constructor(private readonly landmarksService: LandmarksService) {
-  }
+  constructor(private readonly landmarksService: LandmarksService) {}
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   async create(
     @Body() createLandmarkDto: CreateLandmarkDto,
     @UploadedFile(new ParseFilePipe(imageTypeValidation()))
-      image: Express.Multer.File,
+    image: Express.Multer.File,
   ): Promise<LandmarkDocument> {
     createLandmarkDto.cover_image = image.filename;
     return this.landmarksService.create(createLandmarkDto);
@@ -43,7 +42,7 @@ export class LandmarksController {
   @UseInterceptors(FilesInterceptor('images'))
   async createImages(
     @UploadedFiles(new ParseFilePipe(imageTypeValidation()))
-      images: Array<Express.Multer.File>,
+    images: Array<Express.Multer.File>,
     @Param('id', ParseMongoIdPipe) id: string,
   ): Promise<void> {
     await this.landmarksService.updateImages(
@@ -77,7 +76,7 @@ export class LandmarksController {
   @UseInterceptors(FileInterceptor('image'))
   updateCoverImage(
     @UploadedFile(new ParseFilePipe(imageTypeValidation()))
-      image: Express.Multer.File,
+    image: Express.Multer.File,
     @Param('id', ParseMongoIdPipe) id: string,
   ) {
     const cover_image: string = image.filename;
