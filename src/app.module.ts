@@ -8,6 +8,8 @@ import { IsUniqueConstraint } from './utils/constraints/is-unique.constaint';
 import { IsExistConstraint } from './utils/constraints/is-exist.constaint';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     CitiesModule,
     TagsModule,
     DatabaseModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [IsUniqueConstraint, IsExistConstraint],
