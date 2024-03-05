@@ -22,6 +22,7 @@ import { imageTypeValidation } from '../utils/validators/image-type.validation';
 import { LandmarksQueryFeature } from './utils/features/landmarks-query.feature';
 import { PaginationResponseFeature } from '../utils/features/pagination-response.feature';
 import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
+import { Public } from '../auth/utils/decorators/public.decorator';
 
 @Controller({ path: 'landmarks', version: '1' })
 export class LandmarksController {
@@ -47,11 +48,12 @@ export class LandmarksController {
   ): Promise<void> {
     await this.landmarksService.updateImages(
       id,
-      images.map((image) => image.filename),
+      images.map((image: Express.Multer.File) => image.filename),
     );
   }
 
   @Get()
+  @Public()
   findAll(
     @Query() query: LandmarksQueryFeature,
   ): Promise<PaginationResponseFeature> {
@@ -59,6 +61,7 @@ export class LandmarksController {
   }
 
   @Get(':id')
+  @Public()
   @UsePipes(ParseMongoIdPipe)
   findOne(@Param('id') id: string): Promise<LandmarkDocument> {
     return this.landmarksService.findOne(id);
@@ -78,7 +81,7 @@ export class LandmarksController {
     @UploadedFile(new ParseFilePipe(imageTypeValidation()))
     image: Express.Multer.File,
     @Param('id', ParseMongoIdPipe) id: string,
-  ) {
+  ): Promise<LandmarkDocument> {
     const cover_image: string = image.filename;
     return this.update(id, { cover_image });
   }

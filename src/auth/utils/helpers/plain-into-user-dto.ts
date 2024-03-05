@@ -1,5 +1,5 @@
-import { UserDocument } from '../../users/entities/user.entity';
-import { UserDto } from '../../users/dto/user.dto';
+import { UserDocument } from '../../../users/entities/user.entity';
+import { UserDto } from '../../../users/dto/user.dto';
 
 export function plainIntoUserDto(user: UserDocument): UserDto {
   return {
