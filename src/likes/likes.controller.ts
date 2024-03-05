@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch } from '@nestjs/common';
 import { LikesService } from './likes.service';
 import { LikeDto } from './dto/like.dto';
 import { User } from '../users/utils/decorators/user.decorator';
@@ -9,12 +9,12 @@ import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
 export class LikesController {
   constructor(private readonly likesService: LikesService) {}
 
-  @Patch(':id')
+  @Patch()
   like(
-    @Param('id', ParseMongoIdPipe) id: string,
+    @Body() likeDto: LikeDto,
     @User('id') user: string,
   ): Promise<LikeDocument | undefined> {
-    const likeDto: LikeDto = { user, landmark: id };
+    likeDto.user = user;
     return this.likesService.like(likeDto);
   }
 
