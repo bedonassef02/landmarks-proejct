@@ -1,9 +1,11 @@
 import {
   ArrayUnique,
   IsArray,
+  IsBoolean,
   IsMongoId,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Length,
   Min,
@@ -57,4 +59,7 @@ export class CreateLandmarkDto {
   @ValidateNested()
   @Type(() => CreateLocationDto)
   location: CreateLocationDto;
+  @IsOptional()
+  @IsBoolean()
+  is_recommended: boolean = false;
 }

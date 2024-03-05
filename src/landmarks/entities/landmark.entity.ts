@@ -45,6 +45,8 @@ export class Landmark {
 
   @Prop()
   cover_image: string;
+  @Prop({ type: Boolean, default: false })
+  is_recommended: boolean;
 }
 
 export const LandmarkSchema = SchemaFactory.createForClass(Landmark);

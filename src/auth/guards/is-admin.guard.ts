@@ -10,7 +10,7 @@ export class IsAdminGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const isPublic:boolean = this.reflector.get<boolean>(
+    const isPublic: boolean = this.reflector.get<boolean>(
       PUBLIC_KEY,
       context.getHandler(),
     );

@@ -11,7 +11,8 @@ import {
   ParseFilePipe,
   Query,
   UsePipes,
-  UploadedFiles, UseGuards,
+  UploadedFiles,
+  UseGuards,
 } from '@nestjs/common';
 import { LandmarksService } from './landmarks.service';
 import { CreateLandmarkDto } from './dto/create-landmark.dto';

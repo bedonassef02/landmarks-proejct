@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { configModule } from './utils/helpers/config-module.helper';
 import { serveStaticModule } from './utils/helpers/serve-static-module.helper';
+import { LikesModule } from './likes/likes.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { serveStaticModule } from './utils/helpers/serve-static-module.helper';
     DatabaseModule,
     AuthModule,
     UsersModule,
+    LikesModule,
+    ReviewsModule,
   ],
   controllers: [],
   providers: [IsUniqueConstraint, IsExistConstraint],

@@ -11,4 +11,4 @@ export const DAY_IN_MILLIS: number = 24 * 60 * 60 * 1000;
 
 export const PUBLIC_KEY: string = 'isPublic';
 
-export const DATABASE_URI:string = "DATABASE_URI"
+export const DATABASE_URI: string = 'DATABASE_URI';

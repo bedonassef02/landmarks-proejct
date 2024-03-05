@@ -14,7 +14,8 @@ import { AuthModule } from '../auth/auth.module';
 @Module({
   imports: [
     AuthModule,
-    MongooseModule.forFeature([{ name: Tag.name, schema: TagSchema }])],
+    MongooseModule.forFeature([{ name: Tag.name, schema: TagSchema }]),
+  ],
   controllers: [TagsController],
   providers: [TagsService],
   exports: [TagsService],

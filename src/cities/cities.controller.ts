@@ -6,7 +6,8 @@ import {
   Patch,
   Param,
   Delete,
-  UsePipes, UseGuards,
+  UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { CitiesService } from './cities.service';
 import { CreateCityDto } from './dto/create-city.dto';

@@ -6,7 +6,8 @@ import {
   Patch,
   Param,
   Delete,
-  UsePipes, UseGuards,
+  UsePipes,
+  UseGuards,
 } from '@nestjs/common';
 import { TagsService } from './tags.service';
 import { CreateTagDto } from './dto/create-tag.dto';
