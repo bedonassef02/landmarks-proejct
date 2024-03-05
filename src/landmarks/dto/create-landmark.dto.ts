@@ -62,4 +62,5 @@ export class CreateLandmarkDto {
   @IsOptional()
   @IsBoolean()
   is_recommended: boolean = false;
+  likes_count?: number;
 }

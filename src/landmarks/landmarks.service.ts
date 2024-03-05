@@ -14,6 +14,8 @@ import { paginationDetails } from '../utils/helpers/pagination-details.helper';
 import { PaginationResponseFeature } from '../utils/features/pagination-response.feature';
 import { Image, ImageDocument } from './entities/image.entity';
 import * as mongoose from 'mongoose';
+import { OnEvent } from '@nestjs/event-emitter';
+import { IncrementLikesDto } from '../likes/dto/increment-likes.dto';
 
 @Injectable()
 export class LandmarksService {
@@ -123,5 +125,12 @@ export class LandmarksService {
 
   private async totalItems(searchQuery: any): Promise<number> {
     return this.landmarkModel.countDocuments(searchQuery);
+  }
+
+  @OnEvent('likes.increment')
+  async incrementLikes(incrementLikesDto: IncrementLikesDto): Promise<void> {
+    const landmark: LandmarkDocument = await this.findOne(incrementLikesDto.id);
+    const likes_count: number = landmark.likes_count + incrementLikesDto.val;
+    await this.update(incrementLikesDto.id, { likes_count });
   }
 }

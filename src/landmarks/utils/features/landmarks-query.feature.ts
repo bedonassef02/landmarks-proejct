@@ -1,6 +1,6 @@
 import { QueryFeature } from '../../../utils/features/query.feature';
-import { Expose } from 'class-transformer';
-import { IsMongoId, IsOptional } from 'class-validator';
+import { Expose, Type } from 'class-transformer';
+import { IsBoolean, IsMongoId, IsOptional } from 'class-validator';
 
 export class LandmarksQueryFeature extends QueryFeature {
   @Expose({ name: 'skip' })
@@ -20,4 +20,9 @@ export class LandmarksQueryFeature extends QueryFeature {
   @IsOptional()
   @IsMongoId()
   city?: string;
+
+  @IsOptional()
+  @Type(() => Boolean)
+  @IsBoolean()
+  is_recommended?: boolean;
 }
