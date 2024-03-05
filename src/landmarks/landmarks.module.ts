@@ -11,7 +11,7 @@ import { Location, LocationSchema } from './entities/location.entity';
 import { Landmark, LandmarkSchema } from './entities/landmark.entity';
 import { Image, ImageSchema } from './entities/image.entity';
 import { LocationService } from './services/location.service';
-import { AuthMiddleware } from '../auth/auth.middleware';
+import { AuthMiddleware } from '../auth/middlewares/auth.middleware';
 import { AuthModule } from '../auth/auth.module';
 import { multerModule } from '../users/utils/helpers/multer-module.helper';
 

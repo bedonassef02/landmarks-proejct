@@ -3,7 +3,7 @@ import {
   NestMiddleware,
   UnauthorizedException,
 } from '@nestjs/common';
-import { TokenService } from './services/token.service';
+import { TokenService } from '../services/token.service';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {

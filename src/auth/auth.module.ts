@@ -8,7 +8,7 @@ import { jwtModule } from './utils/helpers/jwt-module.helper';
 import { ProfileController } from './contollers/profile.controller';
 import { cookieProvider } from './utils/helpers/cookie-provider.helper';
 import { ProfileService } from './services/profile.service';
-import { AuthMiddleware } from './auth.middleware';
+import { AuthMiddleware } from './middlewares/auth.middleware';
 
 @Module({
   imports: [jwtModule, UsersModule],

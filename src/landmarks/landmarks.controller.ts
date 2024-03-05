@@ -11,7 +11,7 @@ import {
   ParseFilePipe,
   Query,
   UsePipes,
-  UploadedFiles,
+  UploadedFiles, UseGuards,
 } from '@nestjs/common';
 import { LandmarksService } from './landmarks.service';
 import { CreateLandmarkDto } from './dto/create-landmark.dto';
@@ -23,12 +23,14 @@ import { LandmarksQueryFeature } from './utils/features/landmarks-query.feature'
 import { PaginationResponseFeature } from '../utils/features/pagination-response.feature';
 import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
 import { Public } from '../auth/utils/decorators/public.decorator';
+import { IsAdminGuard } from '../auth/guards/is-admin.guard';
 
 @Controller({ path: 'landmarks', version: '1' })
 export class LandmarksController {
   constructor(private readonly landmarksService: LandmarksService) {}
 
   @Post()
+  @UseGuards(IsAdminGuard)
   @UseInterceptors(FileInterceptor('image'))
   async create(
     @Body() createLandmarkDto: CreateLandmarkDto,
@@ -40,6 +42,7 @@ export class LandmarksController {
   }
 
   @Patch(':id/images')
+  @UseGuards(IsAdminGuard)
   @UseInterceptors(FilesInterceptor('images'))
   async createImages(
     @UploadedFiles(new ParseFilePipe(imageTypeValidation()))
@@ -68,6 +71,7 @@ export class LandmarksController {
   }
 
   @Patch(':id')
+  @UseGuards(IsAdminGuard)
   update(
     @Param('id', ParseMongoIdPipe) id: string,
     @Body() updateLandmarkDto: UpdateLandmarkDto,
@@ -76,6 +80,7 @@ export class LandmarksController {
   }
 
   @Patch(':id/cover_image')
+  @UseGuards(IsAdminGuard)
   @UseInterceptors(FileInterceptor('image'))
   updateCoverImage(
     @UploadedFile(new ParseFilePipe(imageTypeValidation()))
@@ -87,6 +92,7 @@ export class LandmarksController {
   }
 
   @Delete(':id')
+  @UseGuards(IsAdminGuard)
   @UsePipes(ParseMongoIdPipe)
   async remove(@Param('id') id: string): Promise<void> {
     await this.landmarksService.remove(id);
