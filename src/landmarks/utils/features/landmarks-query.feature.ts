@@ -22,6 +22,10 @@ export class LandmarksQueryFeature extends QueryFeature {
   city?: string;
 
   @IsOptional()
+  @IsMongoId()
+  tag?:string;
+
+  @IsOptional()
   @Type(() => Boolean)
   @IsBoolean()
   is_recommended?: boolean;

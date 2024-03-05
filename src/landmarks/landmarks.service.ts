@@ -53,10 +53,6 @@ export class LandmarksService {
   async findOne(id: string): Promise<LandmarkDocument> {
     const landmark: LandmarkDocument | undefined = await this.landmarkModel
       .findById(id)
-      .populate('images')
-      .populate('city')
-      .populate('tags')
-      .populate('location');
     if (!landmark) {
       throw new NotFoundException('landmark not found');
     }
@@ -117,11 +113,18 @@ export class LandmarksService {
     const filter: any = {
       $or: query.searchQuery,
     };
+
     if (query.city) {
       filter.city = query.city;
     }
+
+    if (query.tag) {
+      filter.tags = query.tag;
+    }
+
     return filter;
   }
+
 
   private async totalItems(searchQuery: any): Promise<number> {
     return this.landmarkModel.countDocuments(searchQuery);
