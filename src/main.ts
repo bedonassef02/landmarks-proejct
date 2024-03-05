@@ -2,8 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
+import * as cookieParser from 'cookie-parser';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(
@@ -12,9 +13,13 @@ async function bootstrap() {
 
   app.setGlobalPrefix('/api');
   app.enableVersioning();
+  app.use(cookieParser());
+
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
-  await app.listen(3000);
+  const port: number = parseInt(process.env.APP_PORT, 10) || 3000;
+
+  await app.listen(port);
 }
 
 bootstrap();

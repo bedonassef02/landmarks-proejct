@@ -9,7 +9,7 @@ export class RegisterDto {
   @IsNotEmpty()
   @IsNotEmpty()
   @Length(8, 32)
-  @IsUnique()
+  @IsUnique({ message: 'email is already in use' })
   readonly email!: string;
   @IsNotEmpty()
   @IsString()

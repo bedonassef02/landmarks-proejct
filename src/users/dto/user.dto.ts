@@ -5,5 +5,5 @@ export class UserDto {
     email: string;
     isAdmin: boolean;
   };
-  token: string;
+  access_token: string;
 }

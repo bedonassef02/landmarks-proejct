@@ -3,20 +3,21 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { PasswordService } from './services/pasword.service';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { createJwtModuleConfig } from './helpers/create-jwt-module-config';
+import { TokenService } from './services/token.service';
+import { jwtModule } from './helpers/jwt-module.helper';
+import { ProfileController } from './contollers/profile.controller';
+import { cookieProvider } from './helpers/cookie-provider.helper';
+import { ProfileService } from './services/profile.service';
 
 @Module({
-  imports: [
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: createJwtModuleConfig,
-    }),
-    UsersModule,
+  imports: [jwtModule, UsersModule],
+  controllers: [AuthController, ProfileController],
+  providers: [
+    AuthService,
+    PasswordService,
+    TokenService,
+    cookieProvider,
+    ProfileService,
   ],
-  controllers: [AuthController],
-  providers: [AuthService, PasswordService],
 })
 export class AuthModule {}

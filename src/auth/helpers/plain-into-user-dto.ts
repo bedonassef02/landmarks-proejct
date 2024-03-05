@@ -9,6 +9,6 @@ export function plainIntoUserDto(user: UserDocument): UserDto {
       email: user.email,
       isAdmin: user.isAdmin,
     },
-    token: '',
+    access_token: '',
   };
 }
