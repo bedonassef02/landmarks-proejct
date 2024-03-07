@@ -51,8 +51,8 @@ export class LandmarksService {
   }
 
   async findOne(id: string): Promise<LandmarkDocument> {
-    const landmark: LandmarkDocument | undefined = await this.landmarkModel
-      .findById(id)
+    const landmark: LandmarkDocument | undefined =
+      await this.landmarkModel.findById(id);
     if (!landmark) {
       throw new NotFoundException('landmark not found');
     }
@@ -124,7 +124,6 @@ export class LandmarksService {
 
     return filter;
   }
-
 
   private async totalItems(searchQuery: any): Promise<number> {
     return this.landmarkModel.countDocuments(searchQuery);

@@ -4,5 +4,5 @@ import { DynamicModule } from '@nestjs/common';
 import { UPLOAD_FOLDER } from '../constants/constants';
 
 export const serveStaticModule: DynamicModule = ServeStaticModule.forRoot({
-  rootPath: join(__dirname, '..', UPLOAD_FOLDER),
+  rootPath: join(__dirname, '..', '..', '..', UPLOAD_FOLDER),
 });

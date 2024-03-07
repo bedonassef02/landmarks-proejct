@@ -23,7 +23,7 @@ export class LandmarksQueryFeature extends QueryFeature {
 
   @IsOptional()
   @IsMongoId()
-  tag?:string;
+  tag?: string;
 
   @IsOptional()
   @Type(() => Boolean)
