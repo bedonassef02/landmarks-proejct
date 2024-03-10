@@ -13,7 +13,7 @@ async function bootstrap(): Promise<void> {
 
   app.setGlobalPrefix('/api');
   app.enableVersioning();
-  // app.enableCors();
+  app.enableCors();
   app.use(cookieParser());
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
