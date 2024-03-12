@@ -14,6 +14,7 @@ import { LocationService } from './services/location.service';
 import { AuthMiddleware } from '../auth/middlewares/auth.middleware';
 import { AuthModule } from '../auth/auth.module';
 import { multerModule } from '../users/utils/helpers/multer-module.helper';
+import { UploadImageService } from './services/upload-image.service';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { multerModule } from '../users/utils/helpers/multer-module.helper';
     AuthModule,
   ],
   controllers: [LandmarksController],
-  providers: [LandmarksService, LocationService],
+  providers: [LandmarksService, LocationService, UploadImageService],
   exports: [LandmarksService],
 })
 export class LandmarksModule implements NestModule {

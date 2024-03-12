@@ -51,13 +51,21 @@ export class LandmarksService {
   }
 
   async findOne(id: string): Promise<LandmarkDocument> {
-    const landmark: LandmarkDocument | undefined =
-      await this.landmarkModel.findById(id);
+    const landmark: LandmarkDocument | null = await this.landmarkModel.findById(id)
+      .populate({ path:'tags', select:'name' })
+      .populate({
+        path: 'city',
+        select: 'name'
+      });
+
     if (!landmark) {
-      throw new NotFoundException('landmark not found');
+      throw new NotFoundException('Landmark not found');
     }
+
     return landmark;
   }
+
+
 
   findByName(name: string): Promise<LandmarkDocument | undefined> {
     return this.landmarkModel.findOne({ name });
