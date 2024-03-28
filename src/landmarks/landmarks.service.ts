@@ -12,7 +12,6 @@ import { LocationService } from './services/location.service';
 import { LandmarksQueryFeature } from './utils/features/landmarks-query.feature';
 import { paginationDetails } from '../utils/helpers/pagination-details.helper';
 import { PaginationResponseFeature } from '../utils/features/pagination-response.feature';
-import * as mongoose from 'mongoose';
 import { OnEvent } from '@nestjs/event-emitter';
 import { IncrementLikesDto } from '../likes/dto/increment-likes.dto';
 

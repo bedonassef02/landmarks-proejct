@@ -12,7 +12,6 @@ import { AuthMiddleware } from '../auth/middlewares/auth.middleware';
 import { AuthModule } from '../auth/auth.module';
 import { IsUserUpdatedMiddleware } from '../auth/middlewares/is-user-updated.middleware';
 import { UsersModule } from '../users/users.module';
-import { UploadController } from './upload.controller';
 
 @Module({
   imports: [
@@ -20,7 +19,7 @@ import { UploadController } from './upload.controller';
     UsersModule,
     MongooseModule.forFeature([{ name: City.name, schema: CitySchema }]),
   ],
-  controllers: [CitiesController, UploadController],
+  controllers: [CitiesController],
   providers: [CitiesService],
   exports: [CitiesService],
 })
