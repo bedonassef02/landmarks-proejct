@@ -9,7 +9,9 @@ export class UploadImageService {
 
   constructor(private readonly configService: ConfigService) {
     this.b2 = new B2({
-      applicationKeyId: this.configService.get('BACKBLAZE_B2_APPLICATION_KEY_ID'),
+      applicationKeyId: this.configService.get(
+        'BACKBLAZE_B2_APPLICATION_KEY_ID',
+      ),
       applicationKey: this.configService.get('BACKBLAZE_B2_APPLICATION_KEY'),
     });
   }

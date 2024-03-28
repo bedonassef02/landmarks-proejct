@@ -52,9 +52,13 @@ export class CreateLandmarkDto {
   @IsString()
   @Length(0, 512)
   opening_hours: string;
-  // @IsNotEmpty()
-  // @IsString()
+  @IsNotEmpty()
+  @IsString()
   cover_image: string;
+  @IsNotEmpty()
+  @IsArray()
+  @IsString({ each: true })
+  images: string[];
   @IsNotEmpty()
   @ValidateNested()
   @Type(() => CreateLocationDto)

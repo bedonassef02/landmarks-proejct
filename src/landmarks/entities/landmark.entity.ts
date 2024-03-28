@@ -4,7 +4,6 @@ import * as mongoose from 'mongoose';
 import { Tag } from '../../tags/entities/tag.entity';
 import { Location } from './location.entity';
 import { City } from '../../cities/entities/city.entity';
-import { Image } from './image.entity';
 
 export type LandmarkDocument = HydratedDocument<Landmark>;
 
@@ -31,8 +30,8 @@ export class Landmark {
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Tag' })
   tags: [Tag];
 
-  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }])
-  images: Image[];
+  @Prop([{ type: String }])
+  images: string[];
 
   @Prop()
   price: number;

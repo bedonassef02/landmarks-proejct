@@ -12,7 +12,6 @@ import { LocationService } from './services/location.service';
 import { LandmarksQueryFeature } from './utils/features/landmarks-query.feature';
 import { paginationDetails } from '../utils/helpers/pagination-details.helper';
 import { PaginationResponseFeature } from '../utils/features/pagination-response.feature';
-import { Image, ImageDocument } from './entities/image.entity';
 import * as mongoose from 'mongoose';
 import { OnEvent } from '@nestjs/event-emitter';
 import { IncrementLikesDto } from '../likes/dto/increment-likes.dto';
@@ -22,8 +21,6 @@ export class LandmarksService {
   constructor(
     @InjectModel(Landmark.name)
     private readonly landmarkModel: Model<LandmarkDocument>,
-    @InjectModel(Image.name)
-    private readonly imageModel: Model<ImageDocument>,
     private readonly locationService: LocationService,
   ) {}
 
@@ -51,11 +48,12 @@ export class LandmarksService {
   }
 
   async findOne(id: string): Promise<LandmarkDocument> {
-    const landmark: LandmarkDocument | null = await this.landmarkModel.findById(id)
-      .populate({ path:'tags', select:'name' })
+    const landmark: LandmarkDocument | null = await this.landmarkModel
+      .findById(id)
+      .populate({ path: 'tags', select: 'name' })
       .populate({
         path: 'city',
-        select: 'name'
+        select: 'name',
       });
 
     if (!landmark) {
@@ -64,8 +62,6 @@ export class LandmarksService {
 
     return landmark;
   }
-
-
 
   findByName(name: string): Promise<LandmarkDocument | undefined> {
     return this.landmarkModel.findOne({ name });
@@ -95,22 +91,6 @@ export class LandmarksService {
     return this.landmarkModel.findByIdAndUpdate(id, updateLandmarkDto, {
       new: true,
     });
-  }
-
-  async updateImages(id: string, images: string[]): Promise<void> {
-    // Create new image documents and collect their IDs
-    const createdImageIds: mongoose.Types.ObjectId[] = [];
-    for (const image of images) {
-      const createdImage = await this.imageModel.create({ path: image });
-      createdImageIds.push(createdImage._id);
-    }
-
-    // Update the landmark with the new image IDs
-    await this.landmarkModel.findByIdAndUpdate(
-      id,
-      { images: createdImageIds },
-      { new: true },
-    );
   }
 
   async remove(id: string): Promise<void> {
