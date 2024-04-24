@@ -1,0 +1,8 @@
+# Ignore Node.js modules
+node_modules/
+
+
+# Ignore Nest.js development files
+.nyc_output/
+coverage/
+.git

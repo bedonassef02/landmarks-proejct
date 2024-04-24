@@ -105,8 +105,10 @@ export class LandmarksService {
       filter.city = query.city;
     }
 
-    if (query.tag) {
-      filter.tags = query.tag;
+    if (query.tags) {
+      // filter.tags = query.tags;
+      const tagsArray = query.tags.split(',').map((tag) => tag.trim());
+      filter.tags = { $in: tagsArray };
     }
 
     return filter;
