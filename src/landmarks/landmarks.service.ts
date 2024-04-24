@@ -49,11 +49,9 @@ export class LandmarksService {
   async findOne(id: string): Promise<LandmarkDocument> {
     const landmark: LandmarkDocument | null = await this.landmarkModel
       .findById(id)
+      .populate('location')
       .populate({ path: 'tags', select: 'name' })
-      .populate({
-        path: 'city',
-        select: 'name',
-      });
+      .populate({ path: 'city', select: 'name' });
 
     if (!landmark) {
       throw new NotFoundException('Landmark not found');
