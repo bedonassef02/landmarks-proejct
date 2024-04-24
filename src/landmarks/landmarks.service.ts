@@ -57,6 +57,8 @@ export class LandmarksService {
       throw new NotFoundException('Landmark not found');
     }
 
+    landmark.views = landmark.views + 1 || 0;
+    await landmark.save();
     return landmark;
   }
 
