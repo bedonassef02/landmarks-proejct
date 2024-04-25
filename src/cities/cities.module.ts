@@ -34,7 +34,7 @@ export class CitiesModule implements NestModule {
           version: '1',
         },
         {
-          path: '/cities/:id',
+          path: '/citie' + 's/:id',
           method: RequestMethod.GET,
           version: '1',
         },

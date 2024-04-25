@@ -101,8 +101,13 @@ export class LandmarksService {
       $or: query.searchQuery,
     };
 
-    if (query.city) {
-      filter.city = query.city;
+    if (query.is_recommended) {
+      filter.is_recommended = true;
+    }
+
+    if (query.cities) {
+      const citiesArray = query.cities.split(',').map((tag) => tag.trim());
+      filter.city = { $in: citiesArray };
     }
 
     if (query.tags) {

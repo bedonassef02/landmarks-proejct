@@ -11,6 +11,7 @@ import { configModule } from './utils/helpers/config-module.helper';
 import { LikesModule } from './likes/likes.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { LlmModule } from './llm/llm.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     LikesModule,
     ReviewsModule,
     EventEmitterModule.forRoot(),
+    LlmModule,
   ],
   controllers: [],
   providers: [IsUniqueConstraint, IsExistConstraint],
