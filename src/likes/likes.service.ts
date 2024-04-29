@@ -11,7 +11,8 @@ export class LikesService {
   constructor(
     @InjectModel(Like.name) private readonly likeModel: Model<LikeDocument>,
     private eventEmitter: EventEmitter2,
-  ) {}
+  ) {
+  }
 
   async like(likeDto: LikeDto): Promise<LikeDocument | undefined> {
     const like: LikeDocument | undefined = await this.findOne(likeDto);
@@ -26,9 +27,14 @@ export class LikesService {
     this.incrementLikes({ ...incrementLikesDto, val: -1 });
     await this.likeModel.findByIdAndDelete(like.id);
   }
-  findAll(user: string) {
-    return this.likeModel.find({ user });
+
+  async findAll(user: string): Promise<any> {
+    const likes = await this.likeModel
+      .find({ user }, { landmark: 1, _id: 0 })
+      .exec();
+    return likes.flatMap((like) => like.landmark);
   }
+
 
   findOne(likeDto: LikeDto): Promise<LikeDocument | undefined> {
     return this.likeModel.findOne(likeDto);

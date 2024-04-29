@@ -40,7 +40,7 @@ export class TagsService {
   }
   async update(id: string, updateTagDto: UpdateTagDto): Promise<TagDocument> {
     // Find the tag by its ID
-    const tag = await this.tagModel.findById(id).exec();
+    const tag = await this.tagModel.findById(id);
 
     // If the tag does not exist, throw NotFoundException
     if (!tag) {
@@ -48,12 +48,10 @@ export class TagsService {
     }
 
     // Check if a tag with the updated name already exists
-    const existingTag = await this.tagModel
-      .findOne({
-        name: updateTagDto.name,
-        _id: { $ne: id },
-      })
-      .exec();
+    const existingTag = await this.tagModel.findOne({
+      name: updateTagDto.name,
+      _id: { $ne: id },
+    });
 
     if (existingTag) {
       throw new ConflictException('Tag name is already in use');

@@ -14,11 +14,11 @@ export class UsersService {
   }
 
   findOne(email: string): Promise<UserDocument | null> {
-    return this.userModel.findOne({ email }).exec();
+    return this.userModel.findOne({ email });
   }
 
   findById(id: string): Promise<UserDocument> {
-    return this.userModel.findById(id).exec();
+    return this.userModel.findById(id);
   }
 
   update(id: string, updateUserDto: UpdateUserDto): Promise<UserDocument> {
