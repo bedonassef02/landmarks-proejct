@@ -11,8 +11,7 @@ export class LikesService {
   constructor(
     @InjectModel(Like.name) private readonly likeModel: Model<LikeDocument>,
     private eventEmitter: EventEmitter2,
-  ) {
-  }
+  ) {}
 
   async like(likeDto: LikeDto): Promise<LikeDocument | undefined> {
     const like: LikeDocument | undefined = await this.findOne(likeDto);
@@ -34,7 +33,6 @@ export class LikesService {
       .exec();
     return likes.flatMap((like) => like.landmark);
   }
-
 
   findOne(likeDto: LikeDto): Promise<LikeDocument | undefined> {
     return this.likeModel.findOne(likeDto);
