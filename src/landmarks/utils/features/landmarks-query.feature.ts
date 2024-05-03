@@ -17,13 +17,14 @@ export class LandmarksQueryFeature extends QueryFeature {
       },
     ];
   }
+
   @IsOptional()
   @IsString()
   cities?: string;
 
   @IsOptional()
   @IsString()
-  // @IsMongoId()
+    // @IsMongoId()
   tags?: string;
 
   @IsOptional()

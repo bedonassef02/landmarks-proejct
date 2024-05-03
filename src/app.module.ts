@@ -12,6 +12,7 @@ import { LikesModule } from './likes/likes.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { LlmModule } from './llm/llm.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -26,8 +27,14 @@ import { LlmModule } from './llm/llm.module';
     ReviewsModule,
     EventEmitterModule.forRoot(),
     LlmModule,
+    CacheModule.register({
+      max: 10,
+      ttl: 60000,
+      isGlobal: true,
+    }),
   ],
   controllers: [],
   providers: [IsUniqueConstraint, IsExistConstraint],
 })
-export class AppModule {}
+export class AppModule {
+}

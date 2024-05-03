@@ -10,11 +10,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Tag, TagSchema } from './entities/tag.entity';
 import { AuthMiddleware } from '../auth/middlewares/auth.middleware';
 import { AuthModule } from '../auth/auth.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
     AuthModule,
     MongooseModule.forFeature([{ name: Tag.name, schema: TagSchema }]),
+    CacheModule.register(),
   ],
   controllers: [TagsController],
   providers: [TagsService],

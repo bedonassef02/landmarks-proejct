@@ -7,6 +7,7 @@ import { AuthMiddleware } from '../auth/middlewares/auth.middleware';
 import { IsUserUpdatedMiddleware } from '../auth/middlewares/is-user-updated.middleware';
 import { AuthModule } from '../auth/auth.module';
 import { UsersModule } from '../users/users.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [

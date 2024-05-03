@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
   UsePipes,
-  UseGuards,
+  UseGuards, UseInterceptors,
 } from '@nestjs/common';
 import { CitiesService } from './cities.service';
 import { CreateCityDto } from './dto/create-city.dto';
@@ -16,10 +16,12 @@ import { CityDocument } from './entities/city.entity';
 import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
 import { IsAdminGuard } from '../auth/guards/is-admin.guard';
 import { Public } from '../auth/utils/decorators/public.decorator';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller({ path: 'cities', version: '1' })
 export class CitiesController {
-  constructor(private readonly citiesService: CitiesService) {}
+  constructor(private readonly citiesService: CitiesService) {
+  }
 
   @Post()
   @UseGuards(IsAdminGuard)
@@ -29,6 +31,8 @@ export class CitiesController {
 
   @Get()
   @Public()
+  @UseInterceptors(CacheInterceptor)
+  @CacheKey('cities')
   findAll(): Promise<CityDocument[]> {
     return this.citiesService.findAll();
   }
