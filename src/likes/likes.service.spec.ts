@@ -65,13 +65,14 @@ describe('LikesService', () => {
     });
   });
 
-  it('should find all likes for a user', async () => {
+  it('should find all likes by user', async () => {
     const user = 'user1';
-    const likes = [
-      { user, landmark: 'landmark1' },
-      { user, landmark: 'landmark2' },
-    ];
+    const likes = [{ landmark: 'landmark1' }, { landmark: 'landmark2' }];
     jest.spyOn(likeModel, 'find').mockResolvedValueOnce(likes as any);
-    expect(await service.findAll(user)).toEqual(likes);
+
+    const result = await service.findAll(user);
+
+    expect(likeModel.find).toHaveBeenCalledWith({ user }, { landmark: 1, _id: 0 });
+    expect(result).toEqual(['landmark1', 'landmark2']);
   });
 });

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { RegisterDto } from './dto/register.dto';
-import { PasswordService } from './services/pasword.service';
+import { PasswordService } from './services/password.service';
 import { UsersService } from '../users/users.service';
 import { UserDocument } from '../users/entities/user.entity';
 import { UserDto } from '../users/dto/user.dto';

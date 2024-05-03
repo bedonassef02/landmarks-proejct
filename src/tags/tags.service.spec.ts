@@ -3,6 +3,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { TagsService } from './tags.service';
 import { Tag, TagDocument } from './entities/tag.entity';
 import { Model } from 'mongoose';
+import { ConflictException } from '@nestjs/common';
 
 describe('TagsService', () => {
   let service: TagsService;
@@ -52,15 +53,21 @@ describe('TagsService', () => {
     expect(await service.findById(id)).toEqual({ id });
   });
 
-  it('should update a tag', async () => {
+  it('should throw ConflictException when tag name is already in use', async () => {
     const id = '1';
-    const updateTagDto = { name: 'updatedTag1' };
+    const updateTagDto = { name: 'existingTag' };
+    // Mock the findOne method to return a document indicating that the tag name is already in use
     jest
-      .spyOn(tagModel, 'findByIdAndUpdate')
-      .mockResolvedValueOnce({ id, ...updateTagDto } as any);
-    expect(await service.update(id, updateTagDto)).toEqual({
-      id,
-      ...updateTagDto,
+      .spyOn(tagModel, 'findOne')
+      .mockResolvedValueOnce({ name: 'existingTag' });
+    // Since the tag name is already in use, we expect the update method to throw a ConflictException
+    await expect(service.update(id, updateTagDto)).rejects.toThrow(
+      ConflictException,
+    );
+    // Optionally, you can also check if the findOne method was called with the correct arguments
+    expect(tagModel.findOne).toHaveBeenCalledWith({
+      name: updateTagDto.name,
+      _id: { $ne: id },
     });
   });
 

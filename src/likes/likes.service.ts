@@ -28,9 +28,7 @@ export class LikesService {
   }
 
   async findAll(user: string): Promise<any> {
-    const likes = await this.likeModel
-      .find({ user }, { landmark: 1, _id: 0 })
-      .exec();
+    const likes = await this.likeModel.find({ user }, { landmark: 1, _id: 0 });
     return likes.flatMap((like) => like.landmark);
   }
 

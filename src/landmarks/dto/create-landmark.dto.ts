@@ -25,11 +25,11 @@ export class CreateLandmarkDto {
   @IsString()
   // @Length(4, 8194)
   description: string;
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   // @Length(4, 128)
   era: string;
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   // @Length(4, 256)
   famous_figures: string;
