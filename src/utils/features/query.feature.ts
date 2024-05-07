@@ -9,6 +9,7 @@ export class QueryFeature {
   @ApiProperty({
     example: 1,
     description: 'The page number.',
+    required: false,
   })
   public readonly page: number = 1;
 
@@ -18,6 +19,7 @@ export class QueryFeature {
   @ApiProperty({
     example: 100,
     description: 'The maximum number of items to return per page.',
+    required: false,
   })
   public readonly limit: number = 100;
 
@@ -29,6 +31,7 @@ export class QueryFeature {
   @ApiProperty({
     example: '-createdAt',
     description: 'Sort order (- for descending, + for ascending).',
+    required: false,
   })
   sort = '-createdAt';
 
@@ -40,14 +43,16 @@ export class QueryFeature {
   @ApiProperty({
     example: 'name price likes_count cover_image views',
     description: 'Fields to include in the response.',
+    required: false,
   })
   fields = 'name price likes_count cover_image views';
 
-  @IsOptional()
-  @IsString()
   @ApiProperty({
     example: 'Cairo',
     description: 'Search query.',
+    required: false,
   })
+  @IsOptional()
+  @IsString()
   search = '';
 }

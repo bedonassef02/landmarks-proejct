@@ -24,6 +24,7 @@ export class LandmarksQueryFeature extends QueryFeature {
   @ApiProperty({
     example: '6072d4bda5f1e64e2401df22,6072d4bda5f1e64e2401df22',
     description: 'Comma-separated IDs of cities.',
+    required: false,
   })
   cities?: string;
 
@@ -33,6 +34,7 @@ export class LandmarksQueryFeature extends QueryFeature {
   @ApiProperty({
     example: '6072d4bda5f1e64e2401df22',
     description: 'ID of the tag.',
+    required: false,
   })
   tags?: string;
 
@@ -42,6 +44,7 @@ export class LandmarksQueryFeature extends QueryFeature {
   @ApiProperty({
     example: true,
     description: 'Indicates whether the landmark is recommended.',
+    required: false,
   })
   is_recommended?: boolean;
 }
