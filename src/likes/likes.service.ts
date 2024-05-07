@@ -14,8 +14,7 @@ export class LikesService {
     @InjectModel(Like.name) private readonly likeModel: Model<LikeDocument>,
     private eventEmitter: EventEmitter2,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {
-  }
+  ) {}
 
   async like(likeDto: LikeDto): Promise<LikeDocument | undefined> {
     const like: LikeDocument | undefined = await this.findOne(likeDto);

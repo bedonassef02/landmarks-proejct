@@ -4,7 +4,9 @@ import { LikeDto } from './dto/like.dto';
 import { User } from '../users/utils/decorators/user.decorator';
 import { LikeDocument } from './entities/like.entity';
 import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Likes')
 @Controller({ path: 'likes', version: '1' })
 export class LikesController {
   constructor(private readonly likesService: LikesService) {}

@@ -1,5 +1,6 @@
 import {
-  ConflictException, Inject,
+  ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -23,8 +24,7 @@ export class LandmarksService {
     private readonly landmarkModel: Model<LandmarkDocument>,
     private readonly locationService: LocationService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {
-  }
+  ) {}
 
   async create(
     createLandmarkDto: CreateLandmarkDto,
@@ -38,14 +38,13 @@ export class LandmarksService {
   async findAll(
     query: LandmarksQueryFeature,
   ): Promise<PaginationResponseFeature> {
-
     const cacheKey: string = JSON.stringify(query);
 
-    const cachedData: PaginationResponseFeature = await this.cacheManager.get(cacheKey);
+    const cachedData: PaginationResponseFeature =
+      await this.cacheManager.get(cacheKey);
     if (cachedData) {
       return cachedData;
     }
-
 
     const filter = this.filter(query);
 
@@ -56,7 +55,11 @@ export class LandmarksService {
       .skip(query.skip)
       .sort(query.sort);
     const totalItems: number = await this.totalItems(filter);
-    const result: PaginationResponseFeature = paginationDetails(query, landmarks, totalItems);
+    const result: PaginationResponseFeature = paginationDetails(
+      query,
+      landmarks,
+      totalItems,
+    );
     await this.cacheManager.set(cacheKey, result, 60000);
     return result;
   }

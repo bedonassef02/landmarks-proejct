@@ -12,7 +12,6 @@ import { Landmark, LandmarkSchema } from './entities/landmark.entity';
 import { LocationService } from './services/location.service';
 import { AuthMiddleware } from '../auth/middlewares/auth.middleware';
 import { AuthModule } from '../auth/auth.module';
-import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [

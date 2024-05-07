@@ -36,5 +36,4 @@ import { CacheModule } from '@nestjs/cache-manager';
   controllers: [],
   providers: [IsUniqueConstraint, IsExistConstraint],
 })
-export class AppModule {
-}
+export class AppModule {}

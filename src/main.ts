@@ -3,9 +3,21 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import * as cookieParser from 'cookie-parser';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
+
+  const options = new DocumentBuilder()
+    .setTitle('Landmarks APP API')
+    .setDescription('This API for our graduation project (Landmarks)')
+    .setVersion('1.0')
+    .addServer('http://localhost:3000/api/v1/', 'Local environment')
+    .addServer('https://landmarks-proejct.onrender.com/api/v1/', 'Production')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api-docs', app, document);
 
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),

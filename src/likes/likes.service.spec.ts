@@ -72,7 +72,10 @@ describe('LikesService', () => {
 
     const result = await service.findAll(user);
 
-    expect(likeModel.find).toHaveBeenCalledWith({ user }, { landmark: 1, _id: 0 });
+    expect(likeModel.find).toHaveBeenCalledWith(
+      { user },
+      { landmark: 1, _id: 0 },
+    );
     expect(result).toEqual(['landmark1', 'landmark2']);
   });
 });

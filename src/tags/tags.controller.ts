@@ -7,7 +7,8 @@ import {
   Param,
   Delete,
   UsePipes,
-  UseGuards, UseInterceptors,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { TagsService } from './tags.service';
 import { CreateTagDto } from './dto/create-tag.dto';
@@ -17,7 +18,9 @@ import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
 import { IsAdminGuard } from '../auth/guards/is-admin.guard';
 import { Public } from '../auth/utils/decorators/public.decorator';
 import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Tags')
 @Controller({ path: 'tags', version: '1' })
 export class TagsController {
   constructor(private readonly tagsService: TagsService) {}
@@ -32,6 +35,7 @@ export class TagsController {
   @Public()
   @UseInterceptors(CacheInterceptor)
   @CacheKey('tags')
+  @CacheTTL(60000 * 10)
   findAll(): Promise<TagDocument[]> {
     return this.tagsService.findAll();
   }

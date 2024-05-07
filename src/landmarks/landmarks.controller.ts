@@ -19,7 +19,9 @@ import { PaginationResponseFeature } from '../utils/features/pagination-response
 import { ParseMongoIdPipe } from '../utils/pipes/parse-mongo-id.pipe';
 import { Public } from '../auth/utils/decorators/public.decorator';
 import { IsAdminGuard } from '../auth/guards/is-admin.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Landmarks')
 @Controller({ path: 'landmarks', version: '1' })
 export class LandmarksController {
   constructor(private readonly landmarksService: LandmarksService) {}
