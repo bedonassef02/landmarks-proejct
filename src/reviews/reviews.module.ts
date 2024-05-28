@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { ReviewsController } from './reviews.controller';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -21,6 +26,11 @@ export class ReviewsModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
     consumer
       .apply(AuthMiddleware, IsUserUpdatedMiddleware)
+      .exclude({
+        path: '/reviews/:id',
+        method: RequestMethod.GET,
+        version: '1',
+      })
       .forRoutes(ReviewsController);
   }
 }
